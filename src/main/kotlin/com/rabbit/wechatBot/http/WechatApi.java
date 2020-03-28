@@ -7,9 +7,9 @@ import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
-public interface UserApi {
+public interface WechatApi {
 
     @Headers("Content-Type: application/json")
     @POST("cgi-bin/webhook/send?key=e113b9de-9d0f-4147-8f14-ea244c23063a")
-    Call<BotResponse> listRepos(@Body BotRequest useregister);
+    Call<BotResponse> sendText(@Body BotRequest useregister);
 }
