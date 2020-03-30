@@ -10,6 +10,6 @@ import retrofit2.http.POST;
 public interface WechatApi {
 
     @Headers("Content-Type: application/json")
-    @POST("cgi-bin/webhook/send?key=e113b9de-9d0f-4147-8f14-ea244c23063a")
+    @POST("cgi-bin/webhook/send?key=")//注意填入webhook的key
     Call<BotResponse> sendText(@Body BotRequest useregister);
 }
