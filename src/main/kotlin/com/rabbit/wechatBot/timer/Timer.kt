@@ -18,7 +18,7 @@ class Timer {
      * 天气预报定时器
      * 每天晚上的 秒 分 时   运行
      */
-    @Scheduled(cron = "00 20 18 * * ?")
+    @Scheduled(cron = "00 30 08 * * ?")
     fun forecastTimer() {
         val forecastCall: Call<ForecastResponse> = ApiFactory.apiRetrofit.forecastApi.requestForecast()
         val forecastResponse: Response<ForecastResponse> = forecastCall.execute()
@@ -26,15 +26,31 @@ class Timer {
         if (!forecastResponse.isSuccessful) {
             text = "今天天气预报坏了，我没法提醒啦~"
         } else {
-            text = "我收到了一份天气预报：${forecastResponse.body().result.hourly.description}"
+            text = "今天${forecastResponse.body().result.hourly.description}"
         }
 
+        sendText2Wechat(text)
+    }
+
+    @Scheduled(cron = "00 20 09 * * ?")
+    fun checkIn() {
+        sendText2Wechat("还没打卡？ 你还有10分钟时间咯~")
+    }
+
+    @Scheduled(cron = "00 20 18 * * ?")
+    fun checkOut1() {
+        sendText2Wechat("下班了，记得打卡")
+    }
+
+    @Scheduled(cron = "00 30 19 * * ?")
+    fun checkOut2() {
+        sendText2Wechat("还没走？，一会儿别忘记打卡")
+    }
+
+    private fun sendText2Wechat(text: String){
         val textBean = TextBean(text)
         val para = BotRequest("text", textBean)
         val wechatCall: Call<BotResponse> = ApiFactory.apiRetrofit.wechatApi.sendText(para)
-        val wechatResponse: Response<BotResponse> = wechatCall.execute()
-        if (!forecastResponse.isSuccessful) {
-            //do nothing
-        }
+        wechatCall.execute()
     }
 }
