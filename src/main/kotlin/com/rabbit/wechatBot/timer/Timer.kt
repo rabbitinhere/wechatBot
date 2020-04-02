@@ -26,7 +26,7 @@ class Timer {
         if (!forecastResponse.isSuccessful) {
             text = "今天天气预报坏了，我没法提醒啦~"
         } else {
-            text = "今天${forecastResponse.body().result.hourly.description}"
+            text = "天气预报：现在：${forecastResponse.body().result.hourly.description}"
         }
 
         sendText2Wechat(text)
