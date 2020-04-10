@@ -18,7 +18,7 @@ class Timer {
      * 天气预报定时器
      * 每天晚上的 秒 分 时   运行
      */
-    @Scheduled(cron = "00 30 08 * * ?")
+    @Scheduled(cron = "00 30 08 ? * MON-FRI")
     fun forecastTimer() {
         val forecastCall: Call<ForecastResponse> = ApiFactory.apiRetrofit.forecastApi.requestForecast()
         val forecastResponse: Response<ForecastResponse> = forecastCall.execute()
@@ -32,17 +32,17 @@ class Timer {
         sendText2Wechat(text)
     }
 
-    @Scheduled(cron = "00 20 09 * * ?")
+    @Scheduled(cron = "00 20 09 ? * MON-FRI")
     fun checkIn() {
         sendText2Wechat("还没打卡？ 你还有10分钟时间咯~")
     }
 
-    @Scheduled(cron = "00 20 18 * * ?")
+    @Scheduled(cron = "00 20 18 ? * MON-FRI")
     fun checkOut1() {
         sendText2Wechat("下班了，记得打卡")
     }
 
-    @Scheduled(cron = "00 30 19 * * ?")
+    @Scheduled(cron = "00 30 19 ? * MON-FRI")
     fun checkOut2() {
         sendText2Wechat("还没走？，一会儿别忘记打卡")
     }
